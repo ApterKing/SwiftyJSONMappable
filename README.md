@@ -47,10 +47,10 @@ class HttpBin: JSONMappable {
 }
 ```
 
-### Transform to JSON/JSONString
+### Transform Model to JSON or JSONString
 
 ``` swift
-let httpBin = ...
+let httpBin = HttpBin(json: jsonData)
 
 let JSON = httpBin.mapJSON()    // transform to SwiftyJSON
 let JSONString = httpBin.mapString()   // transform to json String
@@ -118,6 +118,8 @@ You will get Result like this:
 ```
 
 ### Use with Moya
+
+Request data from: [Here](https://httpbin.org/get)
 
 ``` swift
 MoyaProvider<APIService>().request(.testGet) { (result) in
