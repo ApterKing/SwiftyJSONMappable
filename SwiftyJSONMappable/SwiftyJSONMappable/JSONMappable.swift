@@ -9,24 +9,28 @@
 import Foundation
 import SwiftyJSON
 
+// A string which can be transformed to JSON
+public typealias JSONString = String
+
+// Convert JSON to Model [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON)
 public protocol JSONMappable: JSONConvertibleMappable {
 
     init(json: JSON)
 
 }
 
-/// 将Model 转换为 JSON 及 JSONString
-/// 通过ignoreProperties() 来忽略掉哪些需要被转换
-/// 通过replacedProperties() 来设置将现有的property Name->newName
+// Represents A Converter Which transforms Model to JSON or JSONString
 public protocol JSONConvertibleMappable {
 
     func toJSON() -> JSON
 
-    func toJSONString() -> String?
+    func toJSONString() -> JSONString?
 
+    // Ignore these property's Name
     func ignoreProperties() -> [String]?
 
-    func replacedProperties() -> [String : String]?
+    // Rplace these property's Names with new Names
+    func replacedProperties() -> [String: String]?
 
 }
 
@@ -34,30 +38,36 @@ extension JSONConvertibleMappable {
 
     public func toJSON() -> JSON {
 
-        var results: [String: JSON] = [:]
-
         let mirror = Mirror(reflecting: self)
-        guard mirror.children.count > 0 else {
+        var superMirror = mirror.superclassMirror
+
+        guard mirror.children.count > 0 || (superMirror != nil && superMirror!.children.count > 0) else {
             return JSON(self)
         }
 
-        var sMirror = mirror.superclassMirror
-        while sMirror != nil {
-            for case let (label?, value) in sMirror!.children {
+        var jsons: [String: JSON] = [:]
+        while superMirror != nil {
+            for case let (label?, value) in superMirror!.children {
+                if self.ignoreProperties() != nil && self.ignoreProperties()!.contains(label) {
+                    continue
+                }
                 if let json = value as? JSONConvertibleMappable {
-                    results[label] = json.toJSON()
+                    jsons[self.replacedProperties()?[label] ?? label] = json.toJSON()
                 }
             }
-            sMirror = sMirror?.superclassMirror
+            superMirror = superMirror?.superclassMirror
         }
 
         for case let (label?, value) in mirror.children {
+            if self.ignoreProperties() != nil && self.ignoreProperties()!.contains(label) {
+                continue
+            }
             if let json = value as? JSONConvertibleMappable {
-                results[label] = json.toJSON()
+                jsons[self.replacedProperties()?[label] ?? label] = json.toJSON()
             }
         }
 
-        return JSON(results)
+        return JSON(jsons)
     }
 
     public func toJSONString() -> String? {
@@ -65,11 +75,11 @@ extension JSONConvertibleMappable {
     }
 
     public func ignoreProperties() -> [String]? {
-        return nil
+        return []
     }
 
-    public func replacedProperties() -> [String : String]? {
-        return nil
+    public func replacedProperties() -> [String: String]? {
+        return [:]
     }
 
 }
@@ -90,13 +100,13 @@ extension Optional: JSONConvertibleMappable {
 extension Array: JSONConvertibleMappable {
 
     public func toJSON() -> JSON {
-        var results: [JSON] = []
+        var jsons: [JSON] = []
         for item in self {
             if let item = item as? JSONConvertibleMappable {
-               results.append(item.toJSON())
+               jsons.append(item.toJSON())
             }
         }
-        return JSON(results)
+        return JSON(jsons)
     }
 
 }
@@ -104,17 +114,17 @@ extension Array: JSONConvertibleMappable {
 extension Dictionary: JSONConvertibleMappable {
 
     public func toJSON() -> JSON {
-        var results: [String: JSON] = [:]
+        var jsons: [String: JSON] = [:]
         for (key, value) in self {
             if let key = key as? String {
                 if let value = value as? JSONConvertibleMappable {
-                    results[key] = value.toJSON()
+                    jsons[key] = value.toJSON()
                     continue
                 }
-                results[key] = JSON.null
+                jsons[key] = JSON.null
             }
         }
-        return JSON(results)
+        return JSON(jsons)
     }
 
 }

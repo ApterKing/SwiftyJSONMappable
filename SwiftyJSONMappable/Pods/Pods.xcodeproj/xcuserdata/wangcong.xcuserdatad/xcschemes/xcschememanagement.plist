@@ -4,6 +4,16 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Alamofire.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Moya.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-SwiftyJSONMappable.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -15,6 +25,16 @@
 			<false/>
 		</dict>
 		<key>Pods-SwiftyJSONMappableUITests.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Result.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>RxSwift.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -32,7 +52,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5E661441C944E6D26D0DA3034F5D797C</key>
+		<key>207E44B2B2164C774037A2E2D32BB51D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2A6D0851BA24DD25864CB23A3A83B9CC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -42,7 +67,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>94BF4B083A8B34D90E6F7125B4DA9636</key>
+		<key>88E9EC28B8B46C3631E6B242B50F4442</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B524B3A8AA88C66D33174E0A95D60456</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C419A9BCC9AACDC44A26B80764B6B554</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EFDB85DF4827734B35E8A46720ACAEE0</key>
 		<dict>
 			<key>primary</key>
 			<true/>

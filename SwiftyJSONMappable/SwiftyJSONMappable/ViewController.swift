@@ -42,7 +42,13 @@ class ViewController: UIViewController {
 
 }
 
-class Teacher: JSONMappable {
+class Description {
+    
+    var description: String?
+
+}
+
+class Teacher: Description, JSONMappable {
 
     var id: UInt
     var name: String
@@ -62,11 +68,13 @@ class Teacher: JSONMappable {
             Course(json: json)
         })
 
+        super.init()
+        description = json["description"].stringValue
     }
 
 }
 
-class Course: JSONMappable {
+class Course: Description, JSONMappable {
 
     var name: String
     var time: Date
@@ -81,6 +89,17 @@ class Course: JSONMappable {
         } else {
             time = Date()
         }
+        
+        super.init()
+        description = json["description"].stringValue
+    }
+    
+    func ignoreProperties() -> [String]? {
+        return ["time"]
+    }
+    
+    func replacedProperties() -> [String : String]? {
+        return ["description": "desc"]
     }
 
 }
