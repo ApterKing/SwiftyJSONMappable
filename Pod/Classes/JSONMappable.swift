@@ -74,11 +74,11 @@ extension JSONConvertibleMappable {
         return mapJSON().rawString()
     }
 
-    public func ignoreProperties() -> [String]? {
+    public var ignoreProperties: [String]? {
         return []
     }
 
-    public func replacedProperties() -> [String: String]? {
+    public var replacedProperties: [String: String]? {
         return [:]
     }
 
