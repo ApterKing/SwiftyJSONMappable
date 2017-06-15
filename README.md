@@ -58,7 +58,7 @@ let JSONString = httpBin.mapString()   // transform to json String
 
 You will get Result like this:
 
-``` swift
+``` json
 {
   "headers" : {
     "acceptEncoding" : "gzip;q=1.0, compress;q=0.5",
@@ -103,7 +103,7 @@ public var replacedProperties: [String : String]? {
 
 You will get Result like this:
 
-```  swift
+```  json
 {
   "newOrigin" : "118.113.69.83",
   "url" : "https:\/\/httpbin.org\/get",
