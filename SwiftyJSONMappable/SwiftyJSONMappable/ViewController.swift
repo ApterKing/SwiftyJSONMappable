@@ -13,6 +13,8 @@ import RxSwift
 
 class ViewController: UIViewController {
 
+    let disposeBag = DisposeBag()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -48,19 +50,20 @@ class ViewController: UIViewController {
             }
         }
 
-//        RxMoyaProvider<APIService>().request(.testGet)
-//            .mapJSONMappable(HttpBin.self)
-//            .subscribe { (event) in
-//                print("\n\n--------------- 网络示例RxSwift -------------------")
-//                switch event {
-//                case let .next(httpBin):
-//                    print(httpBin.mapString() ?? "请求完毕")
-//                case let .error(error):
-//                    print(error)
-//                default:
-//                    print(event)
-//                }
-//            }
+        RxMoyaProvider<APIService>().request(.testGet)
+            .mapJSONMappable(HttpBin.self)
+            .observeOn(SerialDispatchQueueScheduler(internalSerialQueueName: "test"))
+            .subscribe { (event) in
+                switch event {
+                case let .next(httpBin):
+                    print("\n\n--------------- 网络示例RxSwift -------------------")
+                    print(httpBin.mapString() ?? "请求完毕")
+                case let .error(error):
+                    print(error)
+                default:
+                    print(event)
+                }
+            }.addDisposableTo(disposeBag)
     }
 
     override func didReceiveMemoryWarning() {

@@ -2,11 +2,12 @@
 Pod::Spec.new do |s|
 
   s.name         = "SwiftyJSONMappable"
-  s.version      = "0.2.0"
+  s.version      = "1.0.0"
   s.summary      = "SwiftyJSON extensions JSON->Model  Model->JSON  model->JSONString."
   s.description  = <<-DESC
 				JSONMappable implement [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON)
 				Response+JSONMappable [Moya](https://github.com/Moya/Moya)
+				Observable+JSONMappable [RxSwift](https://github.com/ReactiveX/RxSwift)
                      DESC
 
   s.homepage     = "https://github.com/ApterKing/SwiftyJSONMappable"
@@ -38,8 +39,14 @@ Pod::Spec.new do |s|
 
   s.subspec "Moya" do |ss|
 	ss.source_files = "Pod/Classes/Response+JSONMappable.swift"	
-  	ss.dependency "Moya", "~>8.0.4"
+  	ss.dependency "Moya"
 	ss.dependency "SwiftyJSONMappable/Mappable"
+  end
+
+  s.subspec "RxSwift" do |ss|
+	ss.source_files = "Pod/Classes/Observable+JSONMappable.swift"	
+  	ss.dependency "RxSwift"
+	ss.dependency "SwiftyJSONMappable/Moya"
   end
 
 end
