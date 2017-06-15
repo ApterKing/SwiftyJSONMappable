@@ -41,6 +41,7 @@ class ViewController: UIViewController {
             case let .success(response):
                 do {
                     let httpBin = try response.mapJSONMappable(HttpBin.self)
+                    print("\n\n--------------- 网络示例Moya -------------------")
                     print(httpBin.mapString() ?? "")
                 } catch {
                     print(error)
