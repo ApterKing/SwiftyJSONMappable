@@ -93,14 +93,14 @@ class HttpBin: JSONMappable {
     
     /// Set the ignore Property's Names
     public var ignoreProperties: [String]? {
-		return ["args"]
-	}
+	return ["args"]
+    }
 
-	/// Set the replace Properties
-	/// [originName: newName]
-	public var replacedProperties: [String : String]? {
-		return ["origin": "newOrigin"]
-	}
+    /// Set the replace Properties
+    /// [originName: newName]
+    public var replacedProperties: [String : String]? {
+    	return ["origin": "newOrigin"]
+    }
 }
 
 ```
