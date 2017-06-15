@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "SwiftyJSONMappable"
-  s.version      = "1.0.1"
+  s.version      = "1.0.2"
   s.summary      = "SwiftyJSON extensions JSON->Model  Model->JSON  model->JSONString."
   s.description  = <<-DESC
 				JSONMappable implement [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON)
