@@ -1,0 +1,6 @@
+framework module SwiftyJSONMappable {
+  umbrella header "SwiftyJSONMappable-umbrella.h"
+
+  export *
+  module * { export * }
+}

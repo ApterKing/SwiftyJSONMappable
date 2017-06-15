@@ -22,21 +22,21 @@ public protocol JSONMappable: JSONConvertibleMappable {
 // Represents A Converter Which transforms Model to JSON or JSONString
 public protocol JSONConvertibleMappable {
 
-    func mapJSON() -> JSON
+    func toJSON() -> JSON
 
-    func mapString() -> JSONString?
+    func toJSONString() -> JSONString?
 
     // Ignore these property's Name
-    var ignoreProperties: [String]? { get }
+    func ignoreProperties() -> [String]?
 
     // Rplace these property's Names with new Names
-    var replacedProperties: [String: String]? { get }
+    func replacedProperties() -> [String: String]?
 
 }
 
 extension JSONConvertibleMappable {
 
-    public func mapJSON() -> JSON {
+    public func toJSON() -> JSON {
 
         let mirror = Mirror(reflecting: self)
         var superMirror = mirror.superclassMirror
@@ -48,38 +48,37 @@ extension JSONConvertibleMappable {
         var jsons: [String: JSON] = [:]
         while superMirror != nil {
             for case let (label?, value) in superMirror!.children {
-                if self.ignoreProperties != nil && self.ignoreProperties!.contains(label) {
+                if self.ignoreProperties() != nil && self.ignoreProperties()!.contains(label) {
                     continue
                 }
                 if let json = value as? JSONConvertibleMappable {
-                    jsons[self.replacedProperties?[label] ?? label] = json.mapJSON()
+                    jsons[self.replacedProperties()?[label] ?? label] = json.toJSON()
                 }
             }
             superMirror = superMirror?.superclassMirror
         }
 
         for case let (label?, value) in mirror.children {
-            if self.ignoreProperties != nil && self.ignoreProperties!.contains(label) {
+            if self.ignoreProperties() != nil && self.ignoreProperties()!.contains(label) {
                 continue
             }
             if let json = value as? JSONConvertibleMappable {
-                jsons[self.replacedProperties?[label] ?? label] = json.mapJSON()
+                jsons[self.replacedProperties()?[label] ?? label] = json.toJSON()
             }
         }
 
         return JSON(jsons)
     }
 
-    public func mapString() -> String? {
-        return mapJSON().rawString()
+    public func toJSONString() -> String? {
+        return toJSON().rawString()
     }
-    
-    public var ignoreProperties: [String]? {
+
+    public func ignoreProperties() -> [String]? {
         return []
     }
 
-    // Rplace these property's Names with new Names
-    public var replacedProperties: [String: String]? {
+    public func replacedProperties() -> [String: String]? {
         return [:]
     }
 
@@ -87,10 +86,10 @@ extension JSONConvertibleMappable {
 
 extension Optional: JSONConvertibleMappable {
 
-    public func mapJSON() -> JSON {
+    public func toJSON() -> JSON {
         if let jSelf = self {
             if let value = jSelf as? JSONConvertibleMappable {
-                return value.mapJSON()
+                return value.toJSON()
             }
         }
         return JSON.null
@@ -100,11 +99,11 @@ extension Optional: JSONConvertibleMappable {
 
 extension Array: JSONConvertibleMappable {
 
-    public func mapJSON() -> JSON {
+    public func toJSON() -> JSON {
         var jsons: [JSON] = []
         for item in self {
             if let item = item as? JSONConvertibleMappable {
-               jsons.append(item.mapJSON())
+               jsons.append(item.toJSON())
             }
         }
         return JSON(jsons)
@@ -114,12 +113,12 @@ extension Array: JSONConvertibleMappable {
 
 extension Dictionary: JSONConvertibleMappable {
 
-    public func mapJSON() -> JSON {
+    public func toJSON() -> JSON {
         var jsons: [String: JSON] = [:]
         for (key, value) in self {
             if let key = key as? String {
                 if let value = value as? JSONConvertibleMappable {
-                    jsons[key] = value.mapJSON()
+                    jsons[key] = value.toJSON()
                     continue
                 }
                 jsons[key] = JSON.null
@@ -132,16 +131,16 @@ extension Dictionary: JSONConvertibleMappable {
 
 extension URL: JSONConvertibleMappable {
 
-    public func mapJSON() -> JSON {
-        return self.absoluteString.mapJSON()
+    public func toJSON() -> JSON {
+        return self.absoluteString.toJSON()
     }
 
 }
 
 extension Date: JSONConvertibleMappable {
 
-    public func mapJSON() -> JSON {
-        return (self.timeIntervalSince1970 * 1000).mapJSON()
+    public func toJSON() -> JSON {
+        return (self.timeIntervalSince1970 * 1000).toJSON()
     }
 
 }

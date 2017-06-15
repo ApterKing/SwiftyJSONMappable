@@ -7,9 +7,10 @@
 //
 
 import UIKit
-import SwiftyJSON
 import Moya
 import RxSwift
+import SwiftyJSON
+import SwiftyJSONMappable
 
 class ViewController: UIViewController {
 
@@ -36,7 +37,6 @@ class ViewController: UIViewController {
 
         /* ------------------  网络示例 ------------- */
         MoyaProvider<APIService>().request(.testGet) { (result) in
-            print("\n\n--------------- 网络示例非RxSwift -------------------")
             switch result {
             case let .success(response):
                 do {
@@ -133,14 +133,6 @@ class Course: Description, JSONMappable {
         description = json["description"].stringValue
     }
 
-    func ignoreProperties() -> [String]? {
-        return ["time"]
-    }
-
-    func replacedProperties() -> [String : String]? {
-        return ["description": "desc"]
-    }
-
 }
 
 /* -------------------------- 网络测试 ------------------ */
@@ -213,4 +205,5 @@ class HttpBin: JSONMappable {
         origin = json["origin"].stringValue
         url = json["url"].stringValue
     }
+
 }

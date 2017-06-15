@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "SwiftyJSONMappable"
-  s.version      = "1.0.0"
+  s.version      = "1.0.1"
   s.summary      = "SwiftyJSON extensions JSON->Model  Model->JSON  model->JSONString."
   s.description  = <<-DESC
 				JSONMappable implement [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON)
@@ -45,7 +45,7 @@ Pod::Spec.new do |s|
 
   s.subspec "RxSwift" do |ss|
 	ss.source_files = "Pod/Classes/Observable+JSONMappable.swift"	
-  	ss.dependency "RxSwift"
+  	ss.dependency "Moya/RxSwift"
 	ss.dependency "SwiftyJSONMappable/Moya"
   end
 
