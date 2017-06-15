@@ -127,12 +127,12 @@ Request data from: [Here](https://httpbin.org/get)
 
 ``` swift
 MoyaProvider<APIService>().request(.testGet) { (result) in
-	switch result {
-	case let .success(response):
-		do {
+    switch result {
+    case let .success(response):
+    	do {
             let httpBin = try response.mapJSONMappable(HttpBin.self)
             print(httpBin.mapString() ?? "")
-         } catch {
+        } catch {
             print(error)
         }
     case let .failure(error):
