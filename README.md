@@ -11,19 +11,19 @@ Enclose SwiftyJSON which implement:
 
 You can use cocoapod utility to import it to your Project
 
-``` 
+``` swift
 pod 'SwiftyJSONMappable'
 ```
 
 **Or** : Use it with [Moya](https://github.com/Moya/Moya)
 
-```
+``` swift
 pod 'SwiftyJSONMappable/Moya'
 ```
 
 **Or** : Use it with [RxSwift](https://github.com/ReactiveX/RxSwift)
 
-``` 
+``` swift
 pod 'SwiftyJSONMappable/RxSwift'
 ```
 
@@ -31,7 +31,7 @@ pod 'SwiftyJSONMappable/RxSwift'
 
 ### Model define
 
-```
+``` swift
 class HttpBin: JSONMappable {
     var args: [String: Any]
     var headers: HttpBinHeaders
@@ -49,7 +49,7 @@ class HttpBin: JSONMappable {
 
 ### Transform to JSON/JSONString
 
-```
+``` swift
 let httpBin = ...
 
 let JSON = httpBin.mapJSON()    // transform to SwiftyJSON
@@ -58,7 +58,7 @@ let JSONString = httpBin.mapString()   // transform to json String
 
 You will get Result like this:
 
-``` 
+``` swift
 {
   "headers" : {
     "acceptEncoding" : "gzip;q=1.0, compress;q=0.5",
@@ -77,7 +77,7 @@ You will get Result like this:
 
 ### Ignore and Replace Property when transfrom to JSON/JSONString
 
-```
+``` swift
 class HttpBin: JSONMappable {
     var args: [String: Any]
     var headers: HttpBinHeaders
@@ -103,7 +103,7 @@ public var replacedProperties: [String : String]? {
 
 You will get Result like this:
 
-``` 
+```  swift
 {
   "newOrigin" : "118.113.69.83",
   "url" : "https:\/\/httpbin.org\/get",
@@ -119,7 +119,7 @@ You will get Result like this:
 
 ### Use with Moya
 
-```
+``` swift
 MoyaProvider<APIService>().request(.testGet) { (result) in
 	switch result {
 	case let .success(response):
@@ -137,7 +137,7 @@ MoyaProvider<APIService>().request(.testGet) { (result) in
 
 ### Use with RxSwift
 
-```
+``` swift
 RxMoyaProvider<APIService>().request(.testGet)
      .mapJSONMappable(HttpBin.self)
      .observeOn(SerialDispatchQueueScheduler(internalSerialQueueName: "test"))
