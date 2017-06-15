@@ -90,15 +90,19 @@ class HttpBin: JSONMappable {
         origin = json["origin"].stringValue
         url = json["url"].stringValue
     }
+    
+    /// Set the ignore Property's Names
+    public var ignoreProperties: [String]? {
+		return ["args"]
+	}
+
+	/// Set the replace Properties
+	/// [originName: newName]
+	public var replacedProperties: [String : String]? {
+		return ["origin": "newOrigin"]
+	}
 }
 
-public var ignoreProperties: [String]? {
-	return ["args"]
-}
-
-public var replacedProperties: [String : String]? {
-	return ["origin": "newOrigin"]
-}
 ```
 
 You will get Result like this:
