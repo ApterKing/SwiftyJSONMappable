@@ -3,7 +3,7 @@ Enclose SwiftyJSON which implement:
  
 - **JSON->Model** : Transform JsonString or Dictionary/Array etc to Model, for more information [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON)
 
-- **Model->JSON** : Transform Model which impements protocol **JSONConvertibleMappable**
+- **Model->JSON** : Transform Model which impements protocol [JSONConvertibleMappable](https://github.com/ApterKing/SwiftyJSONMappable/blob/master/Pod/Classes/JSONMappable.swift)
 
 [**中文文档**](http://www.jianshu.com/p/5a564585e0ea)
 
