@@ -3,7 +3,7 @@ Enclose SwiftyJSON which implement:
  
 - **JSON->Model** : Transform JsonString or Dictionary/Array etc to Model, for more information [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON)
 
-- **Model->JSON** : Transform Model which impements protocol **JSONConvertibleMappable**
+- **Model->JSON** : Transform Model which impements protocol [JSONConvertibleMappable](https://github.com/ApterKing/SwiftyJSONMappable/blob/master/Pod/Classes/JSONMappable.swift)
 
 [**中文文档**](http://www.jianshu.com/p/5a564585e0ea)
 
@@ -93,14 +93,14 @@ class HttpBin: JSONMappable {
     
     /// Set the ignore Property's Names
     public var ignoreProperties: [String]? {
-		return ["args"]
-	}
+	return ["args"]
+    }
 
-	/// Set the replace Properties
-	/// [originName: newName]
-	public var replacedProperties: [String : String]? {
-		return ["origin": "newOrigin"]
-	}
+    /// Set the replace Properties
+    /// [originName: newName]
+    public var replacedProperties: [String : String]? {
+    	return ["origin": "newOrigin"]
+    }
 }
 
 ```
@@ -127,12 +127,12 @@ Request data from: [Here](https://httpbin.org/get)
 
 ``` swift
 MoyaProvider<APIService>().request(.testGet) { (result) in
-	switch result {
-	case let .success(response):
-		do {
+    switch result {
+    case let .success(response):
+    	do {
             let httpBin = try response.mapJSONMappable(HttpBin.self)
             print(httpBin.mapString() ?? "")
-         } catch {
+        } catch {
             print(error)
         }
     case let .failure(error):
